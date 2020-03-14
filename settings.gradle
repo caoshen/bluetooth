@@ -1,0 +1,2 @@
+include ':app', ':library', ':testgattclient', ':testgattserver', ':testpacket'
+rootProject.name='bluetooth'

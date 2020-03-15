@@ -1,17 +1,35 @@
 package com.example.library.channel.packet;
 
+import java.nio.ByteBuffer;
+
 public class CTRPacket extends Packet {
+
+    private int frameCount;
     public CTRPacket(int frames) {
-        super();
+        this.frameCount = frames;
     }
 
     @Override
     public String getName() {
-        return null;
+        return CTR;
     }
 
     @Override
     public byte[] toBytes() {
-        return new byte[0];
+        ByteBuffer buffer = ByteBuffer.wrap(BUFFER);
+        buffer.putShort((short) Packet.SN_CTR);
+        buffer.put((byte) Packet.TYPE_CMD);
+        // ctr包的command暂设为空
+        buffer.put((byte) 0);
+        // 帧数量
+        buffer.putShort((short) frameCount);
+        return buffer.array();
+    }
+
+    @Override
+    public String toString() {
+        return "CTRPacket{" +
+                "frameCount=" + frameCount +
+                '}';
     }
 }

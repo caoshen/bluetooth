@@ -31,6 +31,7 @@ public abstract class Packet {
     public static final String ACK = "ack";
     public static final String CTR = "ctr";
     public static final String DATA = "data";
+    public static final String INVALID = "invalid";
 
     private static class Header {
         /**

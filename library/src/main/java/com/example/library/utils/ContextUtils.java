@@ -31,8 +31,11 @@ public class ContextUtils {
         mHandler.post(runnable);
     }
 
-    public static String getCurrentThreadName() {
+    public static String getCurrentMethodName() {
         // why use index 4 ?
+        // getStackTrace()[2] : 该方法的信息
+        // getStackTrace()[3] : 该方法的调用者信息
+        // getStackTrace()[4] : 该方法的调用者的调用者信息
         StackTraceElement stackTraceElement = Thread.currentThread().getStackTrace()[4];
         return stackTraceElement.getMethodName();
     }
@@ -47,4 +50,5 @@ public class ContextUtils {
         }
 
     }
+
 }

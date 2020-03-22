@@ -9,6 +9,14 @@ public class CTRPacket extends Packet {
         this.frameCount = frames;
     }
 
+    public int getFrameCount() {
+        return frameCount;
+    }
+
+    public void setFrameCount(int frameCount) {
+        this.frameCount = frameCount;
+    }
+
     @Override
     public String getName() {
         return CTR;

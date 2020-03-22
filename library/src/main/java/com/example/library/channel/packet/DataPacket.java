@@ -78,7 +78,7 @@ public class DataPacket extends Packet {
         return buffer.array();
     }
 
-    private void fillByteBuffer(ByteBuffer buffer) {
+    public void fillByteBuffer(ByteBuffer buffer) {
         buffer.put(bytes.value, bytes.start, getDataLength());
     }
 

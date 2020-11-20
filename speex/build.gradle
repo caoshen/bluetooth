@@ -20,7 +20,6 @@ android {
                 cFlags "-DFIXED_POINT -DUSE_KISS_FFT -UHAVE_CONFIG_H"
                 //don`t use -DEXPORT="", will be escape error:souce $project/Nijna not found.(solution see issue 3.)
                 cppFlags ""
-                abiFilters 'armeabi-v7a', 'arm64-v8a'
             }
         }
     }
@@ -40,11 +39,7 @@ android {
             path "src/main/cpp/CMakeLists.txt"
             version "3.10.2"
         }
-//        ndkBuild {
-//            path 'src/main/cpp/Android.mk'
-//        }
     }
-    ndkVersion '21.0.6113669'
 }
 
 dependencies {

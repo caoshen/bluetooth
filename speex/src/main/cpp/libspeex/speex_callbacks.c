@@ -36,11 +36,12 @@
 #include "config.h"
 #endif
 
+#include <jni.h>
 #include "speex/speex_callbacks.h"
 #include "arch.h"
 #include "os_support.h"
 
-EXPORT int speex_inband_handler(SpeexBits *bits, SpeexCallback *callback_list, void *state)
+JNIEXPORT int speex_inband_handler(SpeexBits *bits, SpeexCallback *callback_list, void *state)
 {
    int id;
    SpeexCallback *callback;
@@ -72,7 +73,7 @@ EXPORT int speex_inband_handler(SpeexBits *bits, SpeexCallback *callback_list, v
    return 0;
 }
 
-EXPORT int speex_std_mode_request_handler(SpeexBits *bits, void *state, void *data)
+JNIEXPORT int speex_std_mode_request_handler(SpeexBits *bits, void *state, void *data)
 {
    spx_int32_t m;
    m = speex_bits_unpack_unsigned(bits, 4);
@@ -80,7 +81,7 @@ EXPORT int speex_std_mode_request_handler(SpeexBits *bits, void *state, void *da
    return 0;
 }
 
-EXPORT int speex_std_low_mode_request_handler(SpeexBits *bits, void *state, void *data)
+JNIEXPORT int speex_std_low_mode_request_handler(SpeexBits *bits, void *state, void *data)
 {
    spx_int32_t m;
    m = speex_bits_unpack_unsigned(bits, 4);
@@ -88,7 +89,7 @@ EXPORT int speex_std_low_mode_request_handler(SpeexBits *bits, void *state, void
    return 0;
 }
 
-EXPORT int speex_std_high_mode_request_handler(SpeexBits *bits, void *state, void *data)
+JNIEXPORT int speex_std_high_mode_request_handler(SpeexBits *bits, void *state, void *data)
 {
    spx_int32_t m;
    m = speex_bits_unpack_unsigned(bits, 4);
@@ -97,7 +98,7 @@ EXPORT int speex_std_high_mode_request_handler(SpeexBits *bits, void *state, voi
 }
 
 #ifndef DISABLE_VBR
-EXPORT int speex_std_vbr_request_handler(SpeexBits *bits, void *state, void *data)
+JNIEXPORT int speex_std_vbr_request_handler(SpeexBits *bits, void *state, void *data)
 {
    spx_int32_t vbr;
    vbr = speex_bits_unpack_unsigned(bits, 1);
@@ -106,7 +107,7 @@ EXPORT int speex_std_vbr_request_handler(SpeexBits *bits, void *state, void *dat
 }
 #endif /* #ifndef DISABLE_VBR */
 
-EXPORT int speex_std_enh_request_handler(SpeexBits *bits, void *state, void *data)
+JNIEXPORT int speex_std_enh_request_handler(SpeexBits *bits, void *state, void *data)
 {
    spx_int32_t enh;
    enh = speex_bits_unpack_unsigned(bits, 1);
@@ -115,7 +116,7 @@ EXPORT int speex_std_enh_request_handler(SpeexBits *bits, void *state, void *dat
 }
 
 #ifndef DISABLE_VBR
-EXPORT int speex_std_vbr_quality_request_handler(SpeexBits *bits, void *state, void *data)
+JNIEXPORT int speex_std_vbr_quality_request_handler(SpeexBits *bits, void *state, void *data)
 {
    float qual;
    qual = speex_bits_unpack_unsigned(bits, 4);
@@ -124,7 +125,7 @@ EXPORT int speex_std_vbr_quality_request_handler(SpeexBits *bits, void *state, v
 }
 #endif /* #ifndef DISABLE_VBR */
 
-EXPORT int speex_std_char_handler(SpeexBits *bits, void *state, void *data)
+JNIEXPORT int speex_std_char_handler(SpeexBits *bits, void *state, void *data)
 {
    unsigned char ch;
    ch = speex_bits_unpack_unsigned(bits, 8);
@@ -136,7 +137,7 @@ EXPORT int speex_std_char_handler(SpeexBits *bits, void *state, void *data)
 
 
 /* Default handler for user callbacks: skip it */
-EXPORT int speex_default_user_handler(SpeexBits *bits, void *state, void *data)
+JNIEXPORT int speex_default_user_handler(SpeexBits *bits, void *state, void *data)
 {
    int req_size = speex_bits_unpack_unsigned(bits, 4);
    speex_bits_advance(bits, 5+8*req_size);

@@ -35,6 +35,7 @@
 #include "config.h"
 #endif
 
+#include <jni.h>
 #include "arch.h"
 #include "speex/speex_header.h"
 #include "speex/speex.h"
@@ -83,7 +84,7 @@ typedef struct SpeexHeader {
 } SpeexHeader;
 */
 
-EXPORT void speex_init_header(SpeexHeader *header, int rate, int nb_channels, const SpeexMode *m)
+JNIEXPORT void speex_init_header(SpeexHeader *header, int rate, int nb_channels, const SpeexMode *m)
 {
    int i;
    const char *h="Speex   ";
@@ -118,7 +119,7 @@ EXPORT void speex_init_header(SpeexHeader *header, int rate, int nb_channels, co
    header->reserved2 = 0;
 }
 
-EXPORT char *speex_header_to_packet(SpeexHeader *header, int *size)
+JNIEXPORT char *speex_header_to_packet(SpeexHeader *header, int *size)
 {
    SpeexHeader *le_header;
    le_header = (SpeexHeader*)speex_alloc(sizeof(SpeexHeader));
@@ -142,7 +143,7 @@ EXPORT char *speex_header_to_packet(SpeexHeader *header, int *size)
    return (char *)le_header;
 }
 
-EXPORT SpeexHeader *speex_packet_to_header(char *packet, int size)
+JNIEXPORT SpeexHeader *speex_packet_to_header(char *packet, int size)
 {
    int i;
    SpeexHeader *le_header;
@@ -196,7 +197,7 @@ EXPORT SpeexHeader *speex_packet_to_header(char *packet, int size)
 
 }
 
-EXPORT void speex_header_free(void *ptr)
+JNIEXPORT void speex_header_free(void *ptr)
 {
    speex_free(ptr);
 }

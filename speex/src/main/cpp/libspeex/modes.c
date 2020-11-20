@@ -45,6 +45,7 @@
 #include "vbr.h"
 #include "arch.h"
 #include <math.h>
+#include <jni.h>
 
 #ifndef NULL
 #define NULL 0
@@ -361,7 +362,7 @@ static const SpeexNBMode nb_mode = {
 
 
 /* Default mode for narrowband */
-EXPORT const SpeexMode speex_nb_mode = {
+JNIEXPORT const SpeexMode speex_nb_mode = {
    &nb_mode,
    nb_mode_query,
    "narrowband",
@@ -379,7 +380,7 @@ EXPORT const SpeexMode speex_nb_mode = {
 
 
 
-EXPORT int speex_mode_query(const SpeexMode *mode, int request, void *ptr)
+JNIEXPORT int speex_mode_query(const SpeexMode *mode, int request, void *ptr)
 {
    return mode->query(mode->mode, request, ptr);
 }

@@ -36,6 +36,7 @@
 #include "config.h"
 #endif
 
+#include <jni.h>
 #include "speex/speex_bits.h"
 #include "arch.h"
 #include "os_support.h"
@@ -45,7 +46,7 @@
 #define MAX_CHARS_PER_FRAME (2000/BYTES_PER_CHAR)
 #endif
 
-EXPORT void speex_bits_init(SpeexBits *bits)
+JNIEXPORT void speex_bits_init(SpeexBits *bits)
 {
    bits->chars = (char*)speex_alloc(MAX_CHARS_PER_FRAME);
    if (!bits->chars)
@@ -58,7 +59,7 @@ EXPORT void speex_bits_init(SpeexBits *bits)
    speex_bits_reset(bits);
 }
 
-EXPORT void speex_bits_init_buffer(SpeexBits *bits, void *buff, int buf_size)
+JNIEXPORT void speex_bits_init_buffer(SpeexBits *bits, void *buff, int buf_size)
 {
    bits->chars = (char*)buff;
    bits->buf_size = buf_size;
@@ -68,7 +69,7 @@ EXPORT void speex_bits_init_buffer(SpeexBits *bits, void *buff, int buf_size)
    speex_bits_reset(bits);
 }
 
-EXPORT void speex_bits_set_bit_buffer(SpeexBits *bits, void *buff, int buf_size)
+JNIEXPORT void speex_bits_set_bit_buffer(SpeexBits *bits, void *buff, int buf_size)
 {
    bits->chars = (char*)buff;
    bits->buf_size = buf_size;
@@ -82,14 +83,14 @@ EXPORT void speex_bits_set_bit_buffer(SpeexBits *bits, void *buff, int buf_size)
 
 }
 
-EXPORT void speex_bits_destroy(SpeexBits *bits)
+JNIEXPORT void speex_bits_destroy(SpeexBits *bits)
 {
    if (bits->owner)
       speex_free(bits->chars);
    /* Will do something once the allocation is dynamic */
 }
 
-EXPORT void speex_bits_reset(SpeexBits *bits)
+JNIEXPORT void speex_bits_reset(SpeexBits *bits)
 {
    /* We only need to clear the first byte now */
    bits->chars[0]=0;
@@ -99,14 +100,14 @@ EXPORT void speex_bits_reset(SpeexBits *bits)
    bits->overflow=0;
 }
 
-EXPORT void speex_bits_rewind(SpeexBits *bits)
+JNIEXPORT void speex_bits_rewind(SpeexBits *bits)
 {
    bits->charPtr=0;
    bits->bitPtr=0;
    bits->overflow=0;
 }
 
-EXPORT void speex_bits_read_from(SpeexBits *bits, const char *chars, int len)
+JNIEXPORT void speex_bits_read_from(SpeexBits *bits, const char *chars, int len)
 {
    int i;
    int nchars = len / BYTES_PER_CHAR;
@@ -153,7 +154,7 @@ static void speex_bits_flush(SpeexBits *bits)
    bits->charPtr=0;
 }
 
-EXPORT void speex_bits_read_whole_bytes(SpeexBits *bits, const char *chars, int nbytes)
+JNIEXPORT void speex_bits_read_whole_bytes(SpeexBits *bits, const char *chars, int nbytes)
 {
    int i,pos;
    int nchars = nbytes/BYTES_PER_CHAR;
@@ -185,7 +186,7 @@ EXPORT void speex_bits_read_whole_bytes(SpeexBits *bits, const char *chars, int 
    bits->nbBits+=nchars<<LOG2_BITS_PER_CHAR;
 }
 
-EXPORT int speex_bits_write(SpeexBits *bits, char *chars, int max_nbytes)
+JNIEXPORT int speex_bits_write(SpeexBits *bits, char *chars, int max_nbytes)
 {
    int i;
    int max_nchars = max_nbytes/BYTES_PER_CHAR;
@@ -208,7 +209,7 @@ EXPORT int speex_bits_write(SpeexBits *bits, char *chars, int max_nbytes)
    return max_nchars*BYTES_PER_CHAR;
 }
 
-EXPORT int speex_bits_write_whole_bytes(SpeexBits *bits, char *chars, int max_nbytes)
+JNIEXPORT int speex_bits_write_whole_bytes(SpeexBits *bits, char *chars, int max_nbytes)
 {
    int max_nchars = max_nbytes/BYTES_PER_CHAR;
    int i;
@@ -226,7 +227,7 @@ EXPORT int speex_bits_write_whole_bytes(SpeexBits *bits, char *chars, int max_nb
    return max_nchars*BYTES_PER_CHAR;
 }
 
-EXPORT void speex_bits_pack(SpeexBits *bits, int data, int nbBits)
+JNIEXPORT void speex_bits_pack(SpeexBits *bits, int data, int nbBits)
 {
    unsigned int d=data;
 
@@ -269,7 +270,7 @@ EXPORT void speex_bits_pack(SpeexBits *bits, int data, int nbBits)
    }
 }
 
-EXPORT int speex_bits_unpack_signed(SpeexBits *bits, int nbBits)
+JNIEXPORT int speex_bits_unpack_signed(SpeexBits *bits, int nbBits)
 {
    unsigned int d=speex_bits_unpack_unsigned(bits,nbBits);
    /* If number is negative */
@@ -280,7 +281,7 @@ EXPORT int speex_bits_unpack_signed(SpeexBits *bits, int nbBits)
    return d;
 }
 
-EXPORT unsigned int speex_bits_unpack_unsigned(SpeexBits *bits, int nbBits)
+JNIEXPORT unsigned int speex_bits_unpack_unsigned(SpeexBits *bits, int nbBits)
 {
    unsigned int d=0;
    if ((bits->charPtr<<LOG2_BITS_PER_CHAR)+bits->bitPtr+nbBits>bits->nbBits)
@@ -302,7 +303,7 @@ EXPORT unsigned int speex_bits_unpack_unsigned(SpeexBits *bits, int nbBits)
    return d;
 }
 
-EXPORT unsigned int speex_bits_peek_unsigned(SpeexBits *bits, int nbBits)
+JNIEXPORT unsigned int speex_bits_peek_unsigned(SpeexBits *bits, int nbBits)
 {
    unsigned int d=0;
    int bitPtr, charPtr;
@@ -331,7 +332,7 @@ EXPORT unsigned int speex_bits_peek_unsigned(SpeexBits *bits, int nbBits)
    return d;
 }
 
-EXPORT int speex_bits_peek(SpeexBits *bits)
+JNIEXPORT int speex_bits_peek(SpeexBits *bits)
 {
    if ((bits->charPtr<<LOG2_BITS_PER_CHAR)+bits->bitPtr+1>bits->nbBits)
       bits->overflow=1;
@@ -340,7 +341,7 @@ EXPORT int speex_bits_peek(SpeexBits *bits)
    return (bits->chars[bits->charPtr]>>(BITS_PER_CHAR-1 - bits->bitPtr))&1;
 }
 
-EXPORT void speex_bits_advance(SpeexBits *bits, int n)
+JNIEXPORT void speex_bits_advance(SpeexBits *bits, int n)
 {
     if (((bits->charPtr<<LOG2_BITS_PER_CHAR)+bits->bitPtr+n>bits->nbBits) || bits->overflow){
       bits->overflow=1;
@@ -350,7 +351,7 @@ EXPORT void speex_bits_advance(SpeexBits *bits, int n)
    bits->bitPtr = (bits->bitPtr+n) & (BITS_PER_CHAR-1);       /* modulo by BITS_PER_CHAR */
 }
 
-EXPORT int speex_bits_remaining(SpeexBits *bits)
+JNIEXPORT int speex_bits_remaining(SpeexBits *bits)
 {
    if (bits->overflow)
       return -1;
@@ -358,12 +359,12 @@ EXPORT int speex_bits_remaining(SpeexBits *bits)
       return bits->nbBits-((bits->charPtr<<LOG2_BITS_PER_CHAR)+bits->bitPtr);
 }
 
-EXPORT int speex_bits_nbytes(SpeexBits *bits)
+JNIEXPORT int speex_bits_nbytes(SpeexBits *bits)
 {
    return ((bits->nbBits+BITS_PER_CHAR-1)>>LOG2_BITS_PER_CHAR);
 }
 
-EXPORT void speex_bits_insert_terminator(SpeexBits *bits)
+JNIEXPORT void speex_bits_insert_terminator(SpeexBits *bits)
 {
    if (bits->bitPtr)
       speex_bits_pack(bits, 0, 1);

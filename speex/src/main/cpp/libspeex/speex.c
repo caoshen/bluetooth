@@ -38,6 +38,7 @@
 
 #include "modes.h"
 #include <math.h>
+#include <jni.h>
 #include "os_support.h"
 
 #ifndef NULL
@@ -48,22 +49,22 @@
 
 
 
-EXPORT void *speex_encoder_init(const SpeexMode *mode)
+JNIEXPORT void *speex_encoder_init(const SpeexMode *mode)
 {
    return mode->enc_init(mode);
 }
 
-EXPORT void *speex_decoder_init(const SpeexMode *mode)
+JNIEXPORT void *speex_decoder_init(const SpeexMode *mode)
 {
    return mode->dec_init(mode);
 }
 
-EXPORT void speex_encoder_destroy(void *state)
+JNIEXPORT void speex_encoder_destroy(void *state)
 {
    (*((SpeexMode**)state))->enc_destroy(state);
 }
 
-EXPORT void speex_decoder_destroy(void *state)
+JNIEXPORT void speex_decoder_destroy(void *state)
 {
    (*((SpeexMode**)state))->dec_destroy(state);
 }
@@ -85,7 +86,7 @@ int speex_decode_native(void *state, SpeexBits *bits, spx_word16_t *out)
 #ifdef FIXED_POINT
 
 #ifndef DISABLE_FLOAT_API
-EXPORT int speex_encode(void *state, float *in, SpeexBits *bits)
+JNIEXPORT int speex_encode(void *state, float *in, SpeexBits *bits)
 {
    int i;
    spx_int32_t N;
@@ -104,7 +105,7 @@ EXPORT int speex_encode(void *state, float *in, SpeexBits *bits)
 }
 #endif /* #ifndef DISABLE_FLOAT_API */
 
-EXPORT int speex_encode_int(void *state, spx_int16_t *in, SpeexBits *bits)
+JNIEXPORT int speex_encode_int(void *state, spx_int16_t *in, SpeexBits *bits)
 {
    SpeexMode *mode;
    mode = *(SpeexMode**)state;
@@ -112,7 +113,7 @@ EXPORT int speex_encode_int(void *state, spx_int16_t *in, SpeexBits *bits)
 }
 
 #ifndef DISABLE_FLOAT_API
-EXPORT int speex_decode(void *state, SpeexBits *bits, float *out)
+JNIEXPORT int speex_decode(void *state, SpeexBits *bits, float *out)
 {
    int i, ret;
    spx_int32_t N;
@@ -125,7 +126,7 @@ EXPORT int speex_decode(void *state, SpeexBits *bits, float *out)
 }
 #endif /* #ifndef DISABLE_FLOAT_API */
 
-EXPORT int speex_decode_int(void *state, SpeexBits *bits, spx_int16_t *out)
+JNIEXPORT int speex_decode_int(void *state, SpeexBits *bits, spx_int16_t *out)
 {
    SpeexMode *mode = *(SpeexMode**)state;
    return (mode)->dec(state, bits, out);
@@ -133,12 +134,12 @@ EXPORT int speex_decode_int(void *state, SpeexBits *bits, spx_int16_t *out)
 
 #else
 
-EXPORT int speex_encode(void *state, float *in, SpeexBits *bits)
+JNIEXPORT int speex_encode(void *state, float *in, SpeexBits *bits)
 {
    return (*((SpeexMode**)state))->enc(state, in, bits);
 }
 
-EXPORT int speex_encode_int(void *state, spx_int16_t *in, SpeexBits *bits)
+JNIEXPORT int speex_encode_int(void *state, spx_int16_t *in, SpeexBits *bits)
 {
    int i;
    spx_int32_t N;
@@ -149,12 +150,12 @@ EXPORT int speex_encode_int(void *state, spx_int16_t *in, SpeexBits *bits)
    return (*((SpeexMode**)state))->enc(state, float_in, bits);
 }
 
-EXPORT int speex_decode(void *state, SpeexBits *bits, float *out)
+JNIEXPORT int speex_decode(void *state, SpeexBits *bits, float *out)
 {
    return (*((SpeexMode**)state))->dec(state, bits, out);
 }
 
-EXPORT int speex_decode_int(void *state, SpeexBits *bits, spx_int16_t *out)
+JNIEXPORT int speex_decode_int(void *state, SpeexBits *bits, spx_int16_t *out)
 {
    int i;
    spx_int32_t N;
@@ -180,12 +181,12 @@ EXPORT int speex_decode_int(void *state, SpeexBits *bits, spx_int16_t *out)
 
 
 
-EXPORT int speex_encoder_ctl(void *state, int request, void *ptr)
+JNIEXPORT int speex_encoder_ctl(void *state, int request, void *ptr)
 {
    return (*((SpeexMode**)state))->enc_ctl(state, request, ptr);
 }
 
-EXPORT int speex_decoder_ctl(void *state, int request, void *ptr)
+JNIEXPORT int speex_decoder_ctl(void *state, int request, void *ptr)
 {
    return (*((SpeexMode**)state))->dec_ctl(state, request, ptr);
 }
@@ -218,7 +219,7 @@ int nb_mode_query(const void *mode, int request, void *ptr)
 
 
 
-EXPORT int speex_lib_ctl(int request, void *ptr)
+JNIEXPORT int speex_lib_ctl(int request, void *ptr)
 {
    switch (request)
    {

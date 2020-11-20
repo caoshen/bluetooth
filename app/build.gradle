@@ -28,4 +28,7 @@ dependencies {
 
     // library
     implementation project(":library")
+
+    // speex
+    implementation project(":speex")
 }

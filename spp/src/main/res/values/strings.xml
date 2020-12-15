@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">SPP</string>
+    <string name="start_server">开启server</string>
+    <string name="device_name_sample">小米10</string>
+    <string name="device_address_sample">00:00:00:00:00:00</string>
+    <string name="start_client">开启client</string>
+    <string name="bond_devices">已配对设备</string>
+    <string name="start_chat">开始聊天</string>
+</resources>

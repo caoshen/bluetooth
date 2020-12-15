@@ -1,3 +1,4 @@
+include ':spp'
 include ':speex'
 include ':app', ':library', ':testgattclient', ':testgattserver', ':testpacket'
 rootProject.name='bluetooth'

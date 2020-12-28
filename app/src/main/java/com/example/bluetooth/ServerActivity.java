@@ -1,4 +1,4 @@
-package io.github.caoshen.bluetooth.spp.ui;
+package com.example.bluetooth;
 
 import android.os.Bundle;
 import android.view.View;
@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import io.github.caoshen.bluetooth.spp.BluetoothSpp;
 import io.github.caoshen.bluetooth.spp.BluetoothState;
 import io.github.caoshen.bluetooth.spp.OnConnectionStateChangedListener;
-import io.github.caoshen.bluetooth.spp.R;
 
 /**
  * @author caoshen
@@ -66,6 +65,7 @@ public class ServerActivity extends AppCompatActivity {
 
     public void startServer(View view) {
         BluetoothSpp.getInstance().start();
+//        startService(new Intent(this, BluetoothServerService.class));
     }
 
     public void startChat(View view) {

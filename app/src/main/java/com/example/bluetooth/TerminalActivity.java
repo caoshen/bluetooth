@@ -1,4 +1,4 @@
-package io.github.caoshen.bluetooth.spp.ui;
+package com.example.bluetooth;
 
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
@@ -20,7 +20,6 @@ import io.github.caoshen.bluetooth.spp.BluetoothState;
 import io.github.caoshen.bluetooth.spp.OnConnectionStateChangedListener;
 import io.github.caoshen.bluetooth.spp.OnDataReceivedListener;
 import io.github.caoshen.bluetooth.spp.OnDeviceConnectionListener;
-import io.github.caoshen.bluetooth.spp.R;
 
 /**
  * @author caoshen

@@ -1,4 +1,4 @@
-package io.github.caoshen.bluetooth.spp.ui;
+package com.example.bluetooth;
 
 import android.view.View;
 

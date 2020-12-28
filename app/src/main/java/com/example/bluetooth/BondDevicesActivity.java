@@ -1,4 +1,4 @@
-package io.github.caoshen.bluetooth.spp.ui;
+package com.example.bluetooth;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -19,7 +19,6 @@ import java.util.Set;
 import io.github.caoshen.bluetooth.spp.BluetoothSpp;
 import io.github.caoshen.bluetooth.spp.BluetoothState;
 import io.github.caoshen.bluetooth.spp.OnConnectionStateChangedListener;
-import io.github.caoshen.bluetooth.spp.R;
 
 /**
  * 发起 SPP 连接的 client

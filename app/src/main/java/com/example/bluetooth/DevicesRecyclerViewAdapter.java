@@ -1,4 +1,4 @@
-package io.github.caoshen.bluetooth.spp.ui;
+package com.example.bluetooth;
 
 import android.bluetooth.BluetoothDevice;
 import android.view.LayoutInflater;
@@ -10,8 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
-
-import io.github.caoshen.bluetooth.spp.R;
 
 /**
  * @author caoshen

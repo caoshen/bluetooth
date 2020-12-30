@@ -30,12 +30,5 @@ dependencies {
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
 
-    // library
-    implementation project(":library")
-
-    // speex
-    implementation project(":speex")
-
-    // spp
-    implementation project(":spp")
+    implementation 'io.github.caoshen.bluetooth:spp:1.0.1'
 }

@@ -26,7 +26,7 @@ import io.github.caoshen.bluetooth.spp.OnDeviceConnectionListener;
  * @date 2020/12/15
  */
 public class TerminalActivity extends AppCompatActivity {
-
+    private static final String KEY_SERVER = "key_server";
     TextView textStatus;
     TextView textRead;
     EditText etMessage;
@@ -79,6 +79,14 @@ public class TerminalActivity extends AppCompatActivity {
         BluetoothSpp.getInstance().registerStateCallback(mCallback);
         BluetoothSpp.getInstance().registerDeviceCallback(mDeviceConnectionListener);
         BluetoothSpp.getInstance().registerDataCallback(mDataListener);
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            boolean isServer = intent.getBooleanExtra(KEY_SERVER, false);
+            if (isServer) {
+                BluetoothSpp.getInstance().start();
+            }
+        }
     }
 
     private void showConnectionState(int state) {
@@ -114,6 +122,12 @@ public class TerminalActivity extends AppCompatActivity {
     }
 
     public static void start(Context context) {
-        context.startActivity(new Intent(context, TerminalActivity.class));
+        start(context, false);
+    }
+
+    public static void start(Context context, boolean isServer) {
+        Intent intent = new Intent(context, TerminalActivity.class);
+        intent.putExtra(KEY_SERVER, isServer);
+        context.startActivity(intent);
     }
 }

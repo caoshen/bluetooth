@@ -18,7 +18,6 @@
             </intent-filter>
         </activity>
         <activity android:name="com.example.bluetooth.BondDevicesActivity" />
-        <activity android:name="com.example.bluetooth.ServerActivity" />
         <activity android:name="com.example.bluetooth.TerminalActivity" />
     </application>
 </manifest>

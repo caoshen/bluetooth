@@ -1,13 +1,13 @@
 package com.example.bluetooth;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -20,6 +20,6 @@ public class MainActivity extends Activity {
     }
 
     public void onClickStartServer(View view) {
-        startActivity(new Intent(this, ServerActivity.class));
+        TerminalActivity.start(this, true);
     }
 }

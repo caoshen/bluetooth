@@ -20,8 +20,33 @@ createOpusEncoder(JNIEnv *env, jobject thiz, jint sampleRate, jint channel, jint
 
     if (pOpusEnc) {
         opus_encoder_ctl(pOpusEnc, OPUS_SET_VBR(0));
-
+        opus_encoder_ctl(pOpusEnc, OPUS_SET_VBR_CONSTRAINT(true));
+        opus_encoder_ctl(pOpusEnc, OPUS_SET_BITRATE(bitRate * 1000));
+        opus_encoder_ctl(pOpusEnc, OPUS_SET_COMPLEXITY(complexity));
+        opus_encoder_ctl(pOpusEnc, OPUS_SET_SIGNAL(OPUS_SIGNAL_VOICE));
+        opus_encoder_ctl(pOpusEnc, OPUS_SET_LSB_DEPTH(16));
+        opus_encoder_ctl(pOpusEnc, OPUS_SET_DTX(0));
+        opus_encoder_ctl(pOpusEnc, OPUS_SET_INBAND_FEC(0));
+        opus_encoder_ctl(pOpusEnc, OPUS_SET_PACKET_LOSS_PERC(0));
     }
 
     return (jlong) pOpusEnc;
 }
+
+jint JNI_OnLoad(JavaVM *vm, void *reserved) {
+    JNIEnv *env = NULL;
+    if (vm->GetEnv((void **) &env, JNI_VERSION_1_6) != JNI_OK) {
+        return JNI_ERR;
+    }
+    // register natives
+    jclass clazz = env->FindClass("io/github/caoshen/opus/Opus");
+    if (clazz == NULL) {
+        return JNI_ERR;
+    }
+    JNINativeMethod g_methods[] = {
+            {"createOpusEncoder", "(IIII)J", (void *) createOpusEncoder}
+    };
+    jint result = env->RegisterNatives(clazz, g_methods, sizeof(g_methods) / sizeof(g_methods[0]));
+    return JNI_VERSION_1_6;
+}
+
